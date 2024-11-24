@@ -8,6 +8,6 @@ public static class Md
     public static string Render(string markdownText)
     {
         var tokens = new Tokenizer(Tags).Tokenize(markdownText);
-        return new HtmlConverter().Convert(tokens);
+        return new HtmlMdConverter().Convert(tokens);
     }
 }

@@ -2,7 +2,7 @@ using Markdown.Tokens;
 
 namespace Markdown;
 
-public interface IConverter
+public interface IMdConverter
 {
     string Convert(List<IToken> tokens);
 }
