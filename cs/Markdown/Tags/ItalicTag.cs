@@ -1,6 +1,6 @@
 namespace Markdown.Tags;
 
-public class ItalicTag : PairTag, ITag
+public class ItalicTag : PairTag
 {
     public override string MdTag => "_";
     public override string HtmlTag => "<em>";
