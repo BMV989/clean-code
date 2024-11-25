@@ -2,6 +2,6 @@ namespace Markdown.Tags;
 
 public class HeaderTag : SingleTag
 {
-    public override string MdTag => "#";
-    public override string HtmlTag => "<h1>";
+    public override string MdOpenTag => "# ";
+    public override string HtmlTag => "h1";
 }

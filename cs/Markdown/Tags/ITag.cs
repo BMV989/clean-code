@@ -2,9 +2,12 @@ namespace Markdown.Tags;
 
 public interface ITag
 {
-    string MdTag { get; }
+    string MdOpenTag { get; }
+    string? MdCloseTag { get; }
     string HtmlTag { get; }
+    bool  SelfClosingTag { get; }
+    IEnumerable<ITag> ForbiddenInside { get; }
     
-    bool IsOpenedCorrectly((char left, char right) contextChars);
-    bool IsClosedCorrectly((char left, char right) contextChars);
+    bool IsOpenedCorrectly(ContextString ctx);
+    bool IsClosedCorrectly(ContextString ctx);
 }
