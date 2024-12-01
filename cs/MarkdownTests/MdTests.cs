@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Markdown;
 using FluentAssertions;
 namespace MarkdownTests;
@@ -9,7 +10,36 @@ public class MdTests
     [TestCaseSource(nameof(ConvertTagsTests))] 
     [TestCaseSource(nameof(MdSpecTests))]
     public void Render_ShouldWorkCorrectly(string input, string expected) => Md.Render(input).Should().Be(expected);
-    
+
+    [TestCase(100, 10)]
+    [TestCase(10, 100)]
+    [TestCase(1, 1000)]
+    public void Render_ShouldWorkLinearly(int times, int inputScale)
+    {
+        const string input = "# Заголовок c _курсивным текстом_ и __полужирным текстом__";
+        var scaledInput = string.Join(Environment.NewLine, Enumerable.Repeat(input, inputScale));
+        var timeWithDefaultInput = MeasureRenderTime(input, times);
+        var timeWithScaledInput = MeasureRenderTime(scaledInput, times);
+        var avgWithDefaultInput = timeWithDefaultInput / times;
+        var avgWithScaledInput = timeWithScaledInput / (inputScale * times);
+        
+        avgWithDefaultInput.Should().NotBeCloseTo(avgWithScaledInput, TimeSpan.FromTicks(20));
+    }
+
+
+    private static TimeSpan MeasureRenderTime(string input, int times = 1)
+    {
+        var timer = new Stopwatch();
+
+        for (var i = 0; i < times; i++)
+        {
+            timer.Start();
+            Md.Render(input);
+            timer.Stop();
+        }
+        
+        return timer.Elapsed;
+    }
     public static IEnumerable<TestCaseData> ConvertTagsTests
     {
         get
