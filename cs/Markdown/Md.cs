@@ -4,10 +4,10 @@ namespace Markdown;
 
 public static class Md
 {
-    private static readonly IEnumerable<ITag> Tags = [new BoldTag(), new HeaderTag(), new ItalicTag()];
+    private static readonly IEnumerable<IMdTagKind> Tags = [];
     public static string Render(string markdownText)
     {
-        var tokens = new MdTokenizer(Tags).Tokenize(markdownText);
-        return new HtmlMdConverter().Convert(tokens);
+        var root = new MdTokenizer(Tags).Tokenize(markdownText);
+        return new HtmlMdConverter().Convert(root);
     }
 }

@@ -1,9 +1,8 @@
 using Markdown.Tags;
-using Markdown.Tokens;
 
 namespace Markdown;
 
-public class MdTokenizer(IEnumerable<ITag> tags)
+public class MdTokenizer(IEnumerable<IMdTagKind> tags)
 {
-    public List<IToken> Tokenize(string markdownText) => throw new NotImplementedException();
+    public Token Tokenize(string markdownText) => throw new NotImplementedException();
 }
