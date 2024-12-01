@@ -12,8 +12,8 @@ public class MdTests
     public void Render_ShouldWorkCorrectly(string input, string expected) => Md.Render(input).Should().Be(expected);
 
     [TestCase(100, 10)]
-    [TestCase(10, 100)]
-    [TestCase(1, 1000)]
+    [TestCase(100, 100)]
+    [TestCase(100, 1000)]
     public void Render_ShouldWorkLinearly(int times, int inputScale)
     {
         const string input = "# Заголовок c _курсивным текстом_ и __полужирным текстом__";
@@ -23,7 +23,7 @@ public class MdTests
         var avgWithDefaultInput = timeWithDefaultInput / times;
         var avgWithScaledInput = timeWithScaledInput / (inputScale * times);
         
-        avgWithDefaultInput.Should().NotBeCloseTo(avgWithScaledInput, TimeSpan.FromTicks(20));
+        avgWithDefaultInput.Should().BeCloseTo(avgWithScaledInput, TimeSpan.FromTicks(3300));
     }
 
 
