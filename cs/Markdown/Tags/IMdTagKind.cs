@@ -10,7 +10,7 @@ public interface IMdTagKind
     public int Length => MdTag.Length;
 
     public bool TokenCanBeCreated(string text, int startIndex, int stopIndex);
-    public bool TryGetToken(string text, Tag openTag, List<Tag> closeTags, out Token token, out Tag closeTag);
+    public bool TryGetToken(string text, Tag openTag, List<Tag> closeTags, out Token token, out Tag? closeTag);
     public string RemoveMdTags(string text);
     public string InsertHtmlTags(string text);
 }

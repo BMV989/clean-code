@@ -1,3 +1,4 @@
+using Markdown.Models;
 using Markdown.Tags;
 
 namespace Markdown;
@@ -33,5 +34,11 @@ public static class StringExtension
     {
         var newLinePosition = text.IndexOf(Environment.NewLine, startIndex, StringComparison.Ordinal); 
         return newLinePosition != -1 ? newLinePosition + Environment.NewLine.Length : text.Length;
+    }
+    
+    public static Token CreateEscapeToken(this string text, Tag escapeTag)
+    {
+        var value = text.Substring(escapeTag.Position - 1, escapeTag.TagKind.Length);
+        return new Token(value, escapeTag.Position - 1, new EscapeMdTagKind());
     }
 }
