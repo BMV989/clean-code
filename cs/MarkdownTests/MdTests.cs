@@ -86,14 +86,34 @@ public class MdTests
                 .SetName("Render_ShouldIgnorePairTags_WhenPlacedWithNumbers")
                 .SetCategory("MdSpec");
             yield return new TestCaseData(
+                    $"Подчерки _мо_гут вы__де__лять ча_сть_ слова{Environment.NewLine}Но в разных словах не могут",
+                    $"Подчерки <em>мо</em>гут вы<strong>де</strong>лять ча<em>сть</em> слова{Environment.NewLine}Но в разных словах не могут")
+                .SetName("Render_ShouldConvertPairTags_WhenPartOfWordMarked")
+                .SetCategory("MdSpec");
+            yield return new TestCaseData(
                     $"Подчерки могут выделять часть слова{Environment.NewLine}Но в раз_ных сло_вах н__е мог__ут",
                     $"Подчерки могут выделять часть слова{Environment.NewLine}Но в раз_ных сло_вах н__е мог__ут")
                 .SetName("Render_ShouldIgnorePairTags_WhenPartsOfDifferentWordsMarked")
                 .SetCategory("MdSpec");
             yield return new TestCaseData(
+                    $"За подчерками, _начинающими выделение,_ должен следовать __непробельный символ__{Environment.NewLine}Иначе_ ничего_ не__ получится!__",
+                    $"За подчерками, <em>начинающими выделение,</em> должен следовать <strong>непробельный символ</strong>{Environment.NewLine}Иначе_ ничего_ не__ получится!__")
+                .SetName("Render_ShouldIgnorePairTags_WhenMarkedWordsStartsWithNonWhitespace")
+                .SetCategory("MdSpec");
+            yield return new TestCaseData(
+                    $"Подчерки, _заканчивающие выделение,_ должны следовать за __непробельным символом__{Environment.NewLine}_Иначе _ничего __не получится __!",
+                    $"Подчерки, <em>заканчивающие выделение,</em> должны следовать за <strong>непробельным символом</strong>{Environment.NewLine}_Иначе _ничего __не получится __!")
+                .SetName("Render_ShouldIgnorePairTags_WhenMarkedWordsEndsWithNonWhitespace")
+                .SetCategory("MdSpec");
+            yield return new TestCaseData(
                     "В случае __пересечения _двойных__ и одинарных_ подчерков ни _один из __них не_ считается__ выделением",
                     "В случае __пересечения _двойных__ и одинарных_ подчерков ни _один из __них не_ считается__ выделением")
-                .SetName("Render_ShouldIgnorePairTags_WhenIntersection")
+                .SetName("Render_ShouldIgnorePairTags_WhenIntersectionBetweenDifferentKindsOfPairTags")
+                .SetCategory("MdSpec");
+            yield return new TestCaseData(
+                    $"__Непарные _символы в рамках{Environment.NewLine}одного_ абзаца не считаются__ выделением",
+                    $"__Непарные _символы в рамках{Environment.NewLine}одного_ абзаца не считаются__ выделением")
+                .SetName("Render_ShouldIgnorePairTags_WhenPlacedInMultiLine")
                 .SetCategory("MdSpec");
             yield return new TestCaseData(
                     "Если внутри подчерков пустая строка ____, то они остаются символами подчерка",
