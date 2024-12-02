@@ -49,13 +49,13 @@ public class MdTokenizer(List<IMdTagKind> tags, IEnumerable<Func<Token, IEnumera
 
     private IEnumerable<Tag> GetTags(string text)
     {
-        for (var pos = 0; pos < text.Length; pos++)
+        for (var position = 0; position < text.Length; position += 1)
         {
-            if (!TryGetTag(text, pos, out var tag)) continue;
+            if (!TryGetTag(text, position, out var tag)) continue;
             
-            yield return new Tag(pos, tag);
+            yield return new Tag(position, tag);
             
-            pos += tag.Length - 1;
+            position += tag.Length - 1;
         }
     }
 
